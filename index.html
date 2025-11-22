@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    h1,
+    h2,
+    .yournumberInput,
+    .inputs,
+    .vvod,
+    .winner,
+    .yourNumber,
+    .moreOrLess {
+      text-align: center;
+    }
+
+
+    .vvod {
+      position: relative;
+    }
+
+    .scoreP {
+      position: absolute;
+      top: 30vh;
+      right: 4%;
+    }
+
+    .none {
+      display: none;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .again {
+      position: absolute;
+      top: 20vh;
+      right: 4%;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="again">Again</button>
+
+  <div class="inputs">
+    <h2>Укажите до какого числа вы хотите угадывать число: </h2>
+    <input type="number" placeholder="От 1 до: " class="yourNumberInput">
+    <button class="yourNumberInput--btn1">Отправить</button>
+  </div>
+
+  <div class="vvod none">
+    <p class="scoreP">Количество попыток: <span class="score">10</span></p>
+    <h1 class="winner"></h1>
+    <h2>Я загадал число от 1 до <span class="yourNumber"></span></h2>
+    <input type="number" class="numberInput" placeholder="Попробуй угадать число">
+    <button class="yourNumberInput--btn2">Отправить</button>
+    <p class="moreOrLess"></p>
+  </div>
+
+
+  <script>
+    "use strict";
+
+    let playing = true;
+
+    const body = document.querySelector("body");
+    const scoreEl = document.querySelector(".score");
+    let score = 10;
+
+    const again = document.querySelector(".again");
+
+    const inputs = document.querySelector(".inputs");
+    const none = document.querySelector(".none");
+    const yourNumberInput = document.querySelector(".yourNumberInput");
+    const yourNumberInputBtn1 = document.querySelector(".yourNumberInput--btn1");
+
+    const vvod = document.querySelector(".vvod");
+    const winner = document.querySelector(".winner");
+    const yourNumber = document.querySelector(".yourNumber");
+    const numberInput = document.querySelector(".numberInput");
+    const moreOrLess = document.querySelector(".moreOrLess");
+    const yourNumberInputBtn2 = document.querySelector(".yourNumberInput--btn2");
+
+    function input1() {
+      if (Number(yourNumberInput.value) > 1 && yourNumberInput.value) {
+        randomNumberMain = Number(
+          Math.trunc(Math.random() * Number(yourNumberInput.value)) + 1
+        );
+        inputs.classList.add("none");
+        vvod.classList.remove("none");
+        console.log(randomNumberMain);
+      } else {
+        alert("Введите коректное числа больше 1");
+      }
+      yourNumber.textContent = yourNumberInput.value;
+    }
+
+    let randomNumberMain;
+    yourNumberInputBtn1.addEventListener("click", function (e) {
+      if (playing) {
+        input1();
+      }
+    });
+    yourNumberInput.addEventListener("keypress", function (e) {
+      if (playing) {
+        if (e.key === "Enter") {
+          input1();
+        }
+      }
+    });
+
+    function input2() {
+      if (
+        Number(numberInput.value) >= 1 &&
+        Number(numberInput.value) <= Number(yourNumberInput.value) &&
+        numberInput.value
+      ) {
+        if (Number(umberInput.value) !== randomNumberMain) {
+          moreOrLess.textContent = `Загаданое число ${(numberInput.value > randomNumberMain) ? "меньше" : "больше"
+            } чем ${numberInput.value}`;
+          numberInput.value = "";
+          score--;
+          scoreEl.textContent = score;
+          if (score === 0) {
+            winner.textContent = `Вы проиграли загаданное число было ${randomNumberMain}`;
+            playing = false;
+            body.style.backgroundColor = "red";
+          }
+        } else {
+          moreOrLess.textContent = "";
+          winner.textContent = `Вы победите загаданное число и правда ${randomNumberMain}`;
+          body.style.backgroundColor = "lime";
+          playing = false;
+        }
+      } else {
+        alert(
+          `Введите число в диапазоне от 1 до ${yourNumberInput.value} включительно`
+        );
+      }
+    }
+
+    yourNumberInputBtn2.addEventListener("click", function (e) {
+      if (playing) {
+        input2();
+      }
+    });
+    numberInput.addEventListener("keypress", function (e) {
+      if (playing) {
+        if (e.key === "Enter") {
+          input2();
+        }
+      }
+    });
+
+    again.addEventListener("click", function (e) {
+      inputs.classList.remove("none");
+      vvod.classList.add("none");
+      yourNumberInput.value = "";
+      numberInput.value = "";
+      body.style.backgroundColor = "";
+      winner.textContent = "";
+      playing = true;
+      score = 10;
+    });
+
+  </script>
+</body>
+
+</html>
