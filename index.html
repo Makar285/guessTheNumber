@@ -94,7 +94,7 @@
         vvod.classList.remove("none");
         console.log(randomNumberMain);
       } else {
-        alert("Введите корректное число больше 1");
+        alert("Введите коректное числа больше 1");
       }
       yourNumber.textContent = yourNumberInput.value;
     }
@@ -119,22 +119,20 @@
         Number(numberInput.value) <= Number(yourNumberInput.value) &&
         numberInput.value
       ) {
-        const guess = Number(numberInput.value);  // Преобразуем в число для надёжных сравнений
-        if (guess !== randomNumberMain) {
-          moreOrLess.textContent = `Загаданное число ${
-            (guess > randomNumberMain) ? "меньше" : "больше"
-          } чем ${guess}`;
+        if (Number(numberInput.value) !== randomNumberMain) {
+          moreOrLess.textContent = `Загаданое число ${(numberInput.value > randomNumberMain) ? "меньше" : "больше"
+            } чем ${numberInput.value}`;
           numberInput.value = "";
           score--;
           scoreEl.textContent = score;
           if (score === 0) {
-            winner.textContent = `Вы проиграли! Загаданное число было ${randomNumberMain}`;
+            winner.textContent = `Вы проиграли загаданное число было ${randomNumberMain}`;
             playing = false;
             body.style.backgroundColor = "red";
           }
         } else {
           moreOrLess.textContent = "";
-          winner.textContent = `Вы победили! Загаданное число и правда ${randomNumberMain}`;
+          winner.textContent = `Вы победите загаданное число и правда ${randomNumberMain}`;
           body.style.backgroundColor = "lime";
           playing = false;
         }
@@ -150,7 +148,7 @@
         input2();
       }
     });
-    numberInput.addEventListener("keypress", function (e) {
+    numberInput.addEventListener("keyup", function (e) {
       if (playing) {
         if (e.key === "Enter") {
           input2();
@@ -165,10 +163,8 @@
       numberInput.value = "";
       body.style.backgroundColor = "";
       winner.textContent = "";
-      moreOrLess.textContent = "";  // Добавлено: очищаем подсказку
       playing = true;
       score = 10;
-      scoreEl.textContent = score;  // Добавлено: обновляем отображение счёта
     });
 
   </script>
