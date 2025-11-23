@@ -23,7 +23,7 @@
 
     .scoreP {
       position: absolute;
-      top: 30vh;
+      top: 35vh;
       right: 4%;
     }
 
@@ -37,7 +37,13 @@
 
     .again {
       position: absolute;
-      top: 20vh;
+      top: 30vh;
+      right: 4%;
+    }
+
+    .scetP {
+      position: absolute;
+      top: 40vh;
       right: 4%;
     }
   </style>
@@ -54,6 +60,8 @@
 
   <div class="vvod none">
     <p class="scoreP">Количество попыток: <span class="score">10</span></p>
+    <p class="scetP">Минимальное число опыток которое вам потребовалось что бы угадать число: <span
+        class="scet">0</span></p>
     <h1 class="winner"></h1>
     <h2>Я загадал число от 1 до <span class="yourNumber"></span></h2>
     <input type="number" class="numberInput" placeholder="Попробуй угадать число">
@@ -70,7 +78,7 @@
     const body = document.querySelector("body");
     const scoreEl = document.querySelector(".score");
     let score = 10;
-
+    let scet = 0;
     const again = document.querySelector(".again");
 
     const inputs = document.querySelector(".inputs");
@@ -92,7 +100,6 @@
         );
         inputs.classList.add("none");
         vvod.classList.remove("none");
-        console.log(randomNumberMain);
       } else {
         alert("Введите коректное числа больше 1");
       }
@@ -120,7 +127,7 @@
         numberInput.value
       ) {
         if (Number(numberInput.value) !== randomNumberMain) {
-          moreOrLess.textContent = `Загаданое число ${(numberInput.value > randomNumberMain) ? "меньше" : "больше"
+          moreOrLess.textContent = `Загаданое число ${numberInput.value > randomNumberMain ? "меньше" : "больше"
             } чем ${numberInput.value}`;
           numberInput.value = "";
           score--;
@@ -135,6 +142,9 @@
           winner.textContent = `Вы победите загаданное число и правда ${randomNumberMain}`;
           body.style.backgroundColor = "lime";
           playing = false;
+          if (score > Number(document.querySelector(".scet").textContent)) {
+            document.querySelector(".scet").textContent = score;
+          }
         }
       } else {
         alert(
@@ -165,6 +175,7 @@
       winner.textContent = "";
       playing = true;
       score = 10;
+      scoreEl.textContent = 10;
     });
 
   </script>
